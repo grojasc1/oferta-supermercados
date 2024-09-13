@@ -16,6 +16,5 @@ export class CiudadEntity {
     num_habitantes: number;
 
     @ManyToMany(type => SupermercadoEntity, supermercado => supermercado.ciudades)
-    @JoinTable()
     supermercados: SupermercadoEntity[];
 }
