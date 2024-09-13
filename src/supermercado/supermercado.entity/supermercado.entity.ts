@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { CiudadEntity } from "src/ciudad/ciudad.entity/ciudad.entity";
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class SupermercadoEntity {
@@ -16,4 +17,8 @@ export class SupermercadoEntity {
 
     @Column()
     paginaWeb: string;
+
+    @ManyToMany(type => CiudadEntity, ciudad => ciudad.supermercados)
+    @JoinTable()
+    ciudades: CiudadEntity[];
 }
