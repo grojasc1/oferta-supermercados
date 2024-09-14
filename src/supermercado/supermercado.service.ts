@@ -42,4 +42,12 @@ export class SupermercadoService {
 
         return await this.supermercadoRepository.save({...persistedSupermercado, ...supermercado});
     }
+
+    async delete(id: string) {
+        const supermercado: SupermercadoEntity = await this.supermercadoRepository.findOne({where: {id}});
+        if (!supermercado)
+            throw new BusinessLogicException("El supermercado con el id proporcionado no existe", BusinessError.NOT_FOUND);
+
+        await this.supermercadoRepository.remove(supermercado);
+    }
 }
