@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CiudadEntity } from './ciudad/ciudad.entity/ciudad.entity';
 import { SupermercadoEntity } from './supermercado/supermercado.entity/supermercado.entity';
 import { CiudadSupermercadoModule } from './ciudad-supermercado/ciudad-supermercado.module';
+import { SupermercadoCiudadModule } from './supermercado-ciudad/supermercado-ciudad.module';
 
 @Module({
   imports: [CiudadModule, SupermercadoModule,
@@ -22,7 +23,8 @@ import { CiudadSupermercadoModule } from './ciudad-supermercado/ciudad-supermerc
       synchronize: true,
       keepConnectionAlive: true,
     }),
-    CiudadSupermercadoModule
+    CiudadSupermercadoModule,
+    SupermercadoCiudadModule
   ],
   controllers: [AppController],
   providers: [AppService],
