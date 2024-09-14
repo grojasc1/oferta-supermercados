@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { SupermercadoService } from './supermercado.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { SupermercadoEntity } from './supermercado.entity/supermercado.entity';
+import { SupermercadoService } from '../supermercado/supermercado.service';
+import { SupermercadoEntity } from '../supermercado/supermercado.entity/supermercado.entity';
 
 @Module({
   providers: [SupermercadoService],

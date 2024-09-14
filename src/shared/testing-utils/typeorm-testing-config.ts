@@ -1,6 +1,6 @@
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { CiudadEntity } from "src/ciudad/ciudad.entity/ciudad.entity";
-import { SupermercadoEntity } from "src/supermercado/supermercado.entity/supermercado.entity";
+import { CiudadEntity } from "../../ciudad/ciudad.entity/ciudad.entity";
+import { SupermercadoEntity } from "../../supermercado/supermercado.entity/supermercado.entity";
 
 export const TypeOrmTestingConfig = () => [
     TypeOrmModule.forRoot({

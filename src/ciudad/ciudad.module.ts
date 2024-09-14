@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { CiudadService } from './ciudad.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CiudadService } from './ciudad.service';
 import { CiudadEntity } from './ciudad.entity/ciudad.entity';
 
 @Module({

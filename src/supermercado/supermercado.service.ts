@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { SupermercadoEntity } from './supermercado.entity/supermercado.entity';
 import { Repository } from 'typeorm';
-import { BusinessError, BusinessLogicException } from 'src/shared/errors/business-errors';
+import { SupermercadoEntity } from '../supermercado/supermercado.entity/supermercado.entity';
+import { BusinessLogicException, BusinessError } from '../shared/errors/business-errors';
 
 @Injectable()
 export class SupermercadoService {
