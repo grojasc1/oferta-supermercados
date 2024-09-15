@@ -1,4 +1,11 @@
-import { Controller } from '@nestjs/common';
+import { Controller, UseInterceptors } from '@nestjs/common';
+import { BusinessErrorsInterceptor } from '../shared/interceptors/business-errors/business-errors.interceptor';
+import { CiudadSupermercadoService } from './ciudad-supermercado.service';
 
-@Controller('ciudad-supermercado')
-export class CiudadSupermercadoController {}
+@Controller('cities')
+@UseInterceptors(BusinessErrorsInterceptor)
+export class CiudadSupermercadoController {
+    constructor(
+        private readonly ciudadSupermercadoservice: CiudadSupermercadoService
+    ) {}
+}
