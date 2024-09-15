@@ -47,7 +47,7 @@ describe('CiudadService', () => {
 
   it('findOne should return a city by id', async () => {
     const storedCiudad: CiudadEntity = ciudadesList[0];
-    const ciudad: CiudadEntity = await service.findOne(storedCiudad.id);
+    const ciudad: CiudadEntity = await service.findOne(storedCiudad.ciudadId);
     expect(ciudad).not.toBeNull();
     expect(ciudad.nombre).toEqual(storedCiudad.nombre);
     expect(ciudad.pais).toEqual(storedCiudad.pais);
@@ -60,7 +60,7 @@ describe('CiudadService', () => {
 
   it('create should return a new city', async () => {
     const ciudad: CiudadEntity = {
-      id: "",
+      ciudadId: "",
       nombre: faker.location.city(),
       pais: ["Argentina", "Ecuador", "Paraguay"][faker.number.int({ min: 0, max: 2 })],
       num_habitantes: faker.number.int({ min: 1000, max: 1000000 }),
@@ -70,7 +70,7 @@ describe('CiudadService', () => {
     const newCiudad: CiudadEntity = await service.create(ciudad);
     expect(newCiudad).not.toBeNull();
 
-    const storedCiudad: CiudadEntity = await repository.findOne({where: {id: newCiudad.id}}); 
+    const storedCiudad: CiudadEntity = await repository.findOne({where: {ciudadId: newCiudad.ciudadId}}); 
     expect(storedCiudad).not.toBeNull();
     expect(storedCiudad.nombre).toEqual(newCiudad.nombre);
     expect(storedCiudad.pais).toEqual(newCiudad.pais);
@@ -82,9 +82,9 @@ describe('CiudadService', () => {
     ciudad.nombre = "New City Name";
     ciudad.pais = ["Argentina", "Ecuador", "Paraguay"][faker.number.int({ min: 0, max: 2 })];
     ciudad.num_habitantes = faker.number.int({ min: 1000, max: 1000000 });
-    const updatedCiudad: CiudadEntity = await service.update(ciudad.id, ciudad);
+    const updatedCiudad: CiudadEntity = await service.update(ciudad.ciudadId, ciudad);
     expect(updatedCiudad).not.toBeNull();
-    const storedCiudad: CiudadEntity = await repository.findOne({where: {id: updatedCiudad.id}});
+    const storedCiudad: CiudadEntity = await repository.findOne({where: {ciudadId: updatedCiudad.ciudadId}});
     expect(storedCiudad).not.toBeNull();
     expect(storedCiudad.nombre).toEqual(ciudad.nombre);
     expect(storedCiudad.pais).toEqual(ciudad.pais);
@@ -101,8 +101,8 @@ describe('CiudadService', () => {
 
   it('delete should remove a city', async () => {
     const ciudad: CiudadEntity = ciudadesList[0];
-    await service.delete(ciudad.id);
-    const deletedCiudad: CiudadEntity = await repository.findOne({where: {id: ciudad.id}});
+    await service.delete(ciudad.ciudadId);
+    const deletedCiudad: CiudadEntity = await repository.findOne({where: {ciudadId: ciudad.ciudadId}});
     expect(deletedCiudad).toBeNull();
   });
 

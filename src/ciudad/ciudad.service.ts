@@ -17,8 +17,8 @@ export class CiudadService {
         return await this.ciudadRepository.find({relations: ['supermercados']});
     }
 
-    async findOne(id: string): Promise<CiudadEntity> {
-        const ciudad: CiudadEntity = await this.ciudadRepository.findOne({where: {id}, relations: ['supermercados']});
+    async findOne(ciudadId: string): Promise<CiudadEntity> {
+        const ciudad: CiudadEntity = await this.ciudadRepository.findOne({where: {ciudadId}, relations: ['supermercados']});
         if (!ciudad)
             throw new BusinessLogicException("La ciudad con el id proporcionado no existe", BusinessError.NOT_FOUND);
         return ciudad;
@@ -32,20 +32,20 @@ export class CiudadService {
         return await this.ciudadRepository.save(ciudad);
     }
 
-    async update(id: string, ciudad: CiudadEntity): Promise<CiudadEntity> {
-        const persistedCiudad: CiudadEntity = await this.ciudadRepository.findOne({where: {id}});
+    async update(ciudadId: string, ciudad: CiudadEntity): Promise<CiudadEntity> {
+        const persistedCiudad: CiudadEntity = await this.ciudadRepository.findOne({where: {ciudadId}});
         if (!persistedCiudad)
             throw new BusinessLogicException("La ciudad con el id proporcionado no existe", BusinessError.NOT_FOUND);
         else if (!this.paisesPermitidos.includes(ciudad.pais))
             throw new BusinessLogicException(`El país ${ciudad.pais} no es válido`, BusinessError.PRECONDITION_FAILED);
 
-        ciudad.id = id;
+        ciudad.ciudadId = ciudadId;
 
         return await this.ciudadRepository.save({...persistedCiudad, ...ciudad});
     }
 
-    async delete(id: string) {
-        const ciudad: CiudadEntity = await this.ciudadRepository.findOne({where: {id}});
+    async delete(ciudadId: string) {
+        const ciudad: CiudadEntity = await this.ciudadRepository.findOne({where: {ciudadId}});
         if (!ciudad)
             throw new BusinessLogicException("La ciudad con el id proporcionado no existe", BusinessError.NOT_FOUND);
 

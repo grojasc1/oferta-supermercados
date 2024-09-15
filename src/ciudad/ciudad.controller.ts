@@ -17,9 +17,9 @@ export class CiudadController {
         return await this.ciudadService.findAll();
     }
 
-    @Get(':id')
-    async findOne(@Param('id') id: string) {
-        return await this.ciudadService.findOne(id);
+    @Get(':ciudadId')
+    async findOne(@Param('ciudadId') ciudadId: string) {
+        return await this.ciudadService.findOne(ciudadId);
     }
 
     @Post()
@@ -28,15 +28,15 @@ export class CiudadController {
         return await this.ciudadService.create(ciudad);
     }
 
-    @Put(':id')
-    async update(@Param('id') id: string, @Body() ciudadDto: CiudadDto) {
+    @Put(':ciudadId')
+    async update(@Param('ciudadId') ciudadId: string, @Body() ciudadDto: CiudadDto) {
         const ciudad: CiudadEntity = plainToInstance(CiudadEntity, ciudadDto);
-        return await this.ciudadService.update(id, ciudad);
+        return await this.ciudadService.update(ciudadId, ciudad);
     }
 
-    @Delete(':id')
+    @Delete(':ciudadId')
     @HttpCode(204)
-    async delete(@Param('id') id: string) {
-        return await this.ciudadService.delete(id);
+    async delete(@Param('ciudadId') ciudadId: string) {
+        return await this.ciudadService.delete(ciudadId);
     }
 }

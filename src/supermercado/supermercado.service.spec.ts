@@ -49,7 +49,7 @@ describe('SupermercadoService', () => {
 
   it('findOne should return a supermarket by id', async () => {
     const storedSupermercado: SupermercadoEntity = supermercadosList[0];
-    const supermercado: SupermercadoEntity = await service.findOne(storedSupermercado.id);
+    const supermercado: SupermercadoEntity = await service.findOne(storedSupermercado.supermercadoId);
     expect(supermercado).not.toBeNull();
     expect(supermercado.nombre).toEqual(storedSupermercado.nombre);
     expect(supermercado.latitud).toEqual(storedSupermercado.latitud);
@@ -63,7 +63,7 @@ describe('SupermercadoService', () => {
 
   it('create should return a new supermarket', async () => {
     const supermercado: SupermercadoEntity = {
-      id: "",
+      supermercadoId: "",
       nombre: "Supermercado " + faker.company.name(),
       latitud: 20,
       longitud: 30,
@@ -73,7 +73,7 @@ describe('SupermercadoService', () => {
     const newSupermercado: SupermercadoEntity = await service.create(supermercado);
     expect(newSupermercado).not.toBeNull();
 
-    const storedSupermercado: SupermercadoEntity = await repository.findOne({where: {id: newSupermercado.id}});
+    const storedSupermercado: SupermercadoEntity = await repository.findOne({where: {supermercadoId: newSupermercado.supermercadoId}});
     expect(storedSupermercado).not.toBeNull();
     expect(storedSupermercado.nombre).toEqual(newSupermercado.nombre);
     expect(storedSupermercado.latitud).toEqual(newSupermercado.latitud);
@@ -88,10 +88,10 @@ describe('SupermercadoService', () => {
     supermercado.longitud = 40;
     supermercado.paginaWeb = faker.internet.url();
 
-    const updatedSupermercado: SupermercadoEntity = await service.update(supermercado.id, supermercado);
+    const updatedSupermercado: SupermercadoEntity = await service.update(supermercado.supermercadoId, supermercado);
     expect(updatedSupermercado).not.toBeNull();
 
-    const storedSupermercado: SupermercadoEntity = await repository.findOne({where: {id: updatedSupermercado.id}});
+    const storedSupermercado: SupermercadoEntity = await repository.findOne({where: {supermercadoId: updatedSupermercado.supermercadoId}});
     expect(storedSupermercado).not.toBeNull();
     expect(storedSupermercado.nombre).toEqual(supermercado.nombre);
     expect(storedSupermercado.latitud).toEqual(supermercado.latitud);
@@ -109,8 +109,8 @@ describe('SupermercadoService', () => {
 
   it('delete should remove a supermarket', async () => {
     const supermercado: SupermercadoEntity = supermercadosList[0];
-    await service.delete(supermercado.id);
-    const deletedSupermercado: SupermercadoEntity = await repository.findOne({where: {id: supermercado.id}});
+    await service.delete(supermercado.supermercadoId);
+    const deletedSupermercado: SupermercadoEntity = await repository.findOne({where: {supermercadoId: supermercado.supermercadoId}});
     expect(deletedSupermercado).toBeNull();
   });
 

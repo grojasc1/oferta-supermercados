@@ -61,7 +61,7 @@ describe('SupermercadoCiudadService', () => {
       num_habitantes: faker.number.int({ min: 1000, max: 1000000 }),
     });
 
-    const updatedSupermercado = await service.addCityToSupermarket(supermercado.id, ciudad.id);
+    const updatedSupermercado = await service.addCityToSupermarket(supermercado.supermercadoId, ciudad.ciudadId);
     expect(updatedSupermercado.ciudades.length).toEqual(ciudadesList.length + 1);
   });
 
@@ -72,15 +72,15 @@ describe('SupermercadoCiudadService', () => {
       num_habitantes: faker.number.int({ min: 1000, max: 1000000 }),
     });
 
-    await expect(() => service.addCityToSupermarket("0", ciudad.id)).rejects.toHaveProperty("message", "El supermercado con el id proporcionado no existe");
+    await expect(() => service.addCityToSupermarket("0", ciudad.ciudadId)).rejects.toHaveProperty("message", "El supermercado con el id proporcionado no existe");
   });
 
   it('addCityToSupermarket should throw an exception for an invalid city', async () => {
-    await expect(() => service.addCityToSupermarket(supermercado.id, "0")).rejects.toHaveProperty("message", "La ciudad con el id proporcionado no existe");
+    await expect(() => service.addCityToSupermarket(supermercado.supermercadoId, "0")).rejects.toHaveProperty("message", "La ciudad con el id proporcionado no existe");
   });
 
   it('findCitiesBySupermarket should return a list of cities from a supermarket', async () => {
-    const ciudades = await service.findCitiesFromSupermarket(supermercado.id);
+    const ciudades = await service.findCitiesFromSupermarket(supermercado.supermercadoId);
     expect(ciudades.length).toEqual(ciudadesList.length);
   });
 
@@ -90,7 +90,7 @@ describe('SupermercadoCiudadService', () => {
 
   it('findCityFromSupermarket should return a city from a supermarket', async () => {
     const ciudad = ciudadesList[0];
-    const storedCiudad = await service.findCityFromSupermarket(supermercado.id, ciudad.id);
+    const storedCiudad = await service.findCityFromSupermarket(supermercado.supermercadoId, ciudad.ciudadId);
     expect(storedCiudad).not.toBeNull();
     expect(storedCiudad.nombre).toEqual(ciudad.nombre);
     expect(storedCiudad.pais).toEqual(ciudad.pais);
@@ -99,11 +99,11 @@ describe('SupermercadoCiudadService', () => {
 
   it('findCityFromSupermarket should throw an exception for an invalid supermarket', async () => {
     const ciudad = ciudadesList[0];
-    await expect(() => service.findCityFromSupermarket("0", ciudad.id)).rejects.toHaveProperty("message", "El supermercado con el id proporcionado no existe");
+    await expect(() => service.findCityFromSupermarket("0", ciudad.ciudadId)).rejects.toHaveProperty("message", "El supermercado con el id proporcionado no existe");
   });
 
   it('findCityFromSupermarket should throw an exception for an invalid city', async () => {
-    await expect(() => service.findCityFromSupermarket(supermercado.id, "0")).rejects.toHaveProperty("message", "La ciudad con el id proporcionado no existe");
+    await expect(() => service.findCityFromSupermarket(supermercado.supermercadoId, "0")).rejects.toHaveProperty("message", "La ciudad con el id proporcionado no existe");
   });
 
   it('findCityFromSupermarket should throw an exception for a non associated city', async () => {
@@ -113,7 +113,7 @@ describe('SupermercadoCiudadService', () => {
       num_habitantes: faker.number.int({ min: 1000, max: 1000000 }),
     });
 
-    await expect(() => service.findCityFromSupermarket(supermercado.id, ciudad.id)).rejects.toHaveProperty("message", "La ciudad con el id proporcionado no está asociada al supermercado");
+    await expect(() => service.findCityFromSupermarket(supermercado.supermercadoId, ciudad.ciudadId)).rejects.toHaveProperty("message", "La ciudad con el id proporcionado no está asociada al supermercado");
   });
 
   it('updateCityFromSupermarket should return a supermarket with an updated city', async () => {
@@ -123,7 +123,7 @@ describe('SupermercadoCiudadService', () => {
       num_habitantes: faker.number.int({ min: 1000, max: 1000000 }),
     });
 
-    const updatedSupermercado = await service.updateCityFromSupermarket(supermercado.id, [ciudad])
+    const updatedSupermercado = await service.updateCityFromSupermarket(supermercado.supermercadoId, [ciudad])
     expect(updatedSupermercado.ciudades.length).toEqual(1);
     expect(updatedSupermercado.ciudades[0].nombre).toEqual(ciudad.nombre);
     expect(updatedSupermercado.ciudades[0].pais).toEqual(ciudad.pais);
@@ -147,25 +147,25 @@ describe('SupermercadoCiudadService', () => {
       num_habitantes: faker.number.int({ min: 1000, max: 1000000 }),
     });
 
-    await expect(() => service.updateCityFromSupermarket(supermercado.id, [ciudad, {id: "0"} as CiudadEntity])).rejects.toHaveProperty("message", "La ciudad con el id proporcionado no existe");
+    await expect(() => service.updateCityFromSupermarket(supermercado.supermercadoId, [ciudad, {ciudadId: "0"} as CiudadEntity])).rejects.toHaveProperty("message", "La ciudad con el id proporcionado no existe");
   });
 
   it('deleteCityFromSupermarket should return a supermarket without a city', async () => {
     const ciudad = ciudadesList[0];
-    await service.deleteCityFromSupermarket(supermercado.id, ciudad.id);
+    await service.deleteCityFromSupermarket(supermercado.supermercadoId, ciudad.ciudadId);
 
-    const storedSupermercado = await supermercadoRepository.findOne({where: {id: supermercado.id}, relations: ["ciudades"]});
-    const deletedCiudad = storedSupermercado.ciudades.find(c => c.id === ciudad.id);
+    const storedSupermercado = await supermercadoRepository.findOne({where: {supermercadoId: supermercado.supermercadoId}, relations: ["ciudades"]});
+    const deletedCiudad = storedSupermercado.ciudades.find(c => c.ciudadId === ciudad.ciudadId);
     expect(deletedCiudad).toBeUndefined();
   });
 
   it('deleteCityFromSupermarket should throw an exception for an invalid supermarket', async () => {
     const ciudad = ciudadesList[0];
-    await expect(() => service.deleteCityFromSupermarket("0", ciudad.id)).rejects.toHaveProperty("message", "El supermercado con el id proporcionado no existe");
+    await expect(() => service.deleteCityFromSupermarket("0", ciudad.ciudadId)).rejects.toHaveProperty("message", "El supermercado con el id proporcionado no existe");
   });
 
   it('deleteCityFromSupermarket should throw an exception for an invalid city', async () => {
-    await expect(() => service.deleteCityFromSupermarket(supermercado.id, "0")).rejects.toHaveProperty("message", "La ciudad con el id proporcionado no existe");
+    await expect(() => service.deleteCityFromSupermarket(supermercado.supermercadoId, "0")).rejects.toHaveProperty("message", "La ciudad con el id proporcionado no existe");
   });
 
   it('deleteCityFromSupermarket should throw an exception for a non associated city', async () => {
@@ -175,7 +175,7 @@ describe('SupermercadoCiudadService', () => {
       num_habitantes: faker.number.int({ min: 1000, max: 1000000 }),
     });
 
-    await expect(() => service.deleteCityFromSupermarket(supermercado.id, ciudad.id)).rejects.toHaveProperty("message", "La ciudad con el id proporcionado no está asociada al supermercado");
+    await expect(() => service.deleteCityFromSupermarket(supermercado.supermercadoId, ciudad.ciudadId)).rejects.toHaveProperty("message", "La ciudad con el id proporcionado no está asociada al supermercado");
   });
 
 });
