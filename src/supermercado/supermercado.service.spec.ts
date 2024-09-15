@@ -29,8 +29,8 @@ describe('SupermercadoService', () => {
     for (let i = 0; i < 5; i++) {
       const supermercado: SupermercadoEntity = await repository.save({
         nombre: "Supermercado " + faker.company.name(),
-        latitud: faker.address.latitude(),
-        longitud: faker.address.longitude(),
+        latitud: i,
+        longitud: i,
         paginaWeb: faker.internet.url(),
       });
       supermercadosList.push(supermercado);
@@ -65,8 +65,8 @@ describe('SupermercadoService', () => {
     const supermercado: SupermercadoEntity = {
       id: "",
       nombre: "Supermercado " + faker.company.name(),
-      latitud: faker.address.latitude(),
-      longitud: faker.address.longitude(),
+      latitud: 20,
+      longitud: 30,
       paginaWeb: faker.internet.url(),
       ciudades: []
     };
@@ -84,8 +84,8 @@ describe('SupermercadoService', () => {
   it('update should modify a supermarket', async () => {
     const supermercado: SupermercadoEntity = supermercadosList[0];
     supermercado.nombre = "Nuevo Supermercado " + faker.company.name();
-    supermercado.latitud = faker.address.latitude();
-    supermercado.longitud = faker.address.longitude();
+    supermercado.latitud = 50;
+    supermercado.longitud = 40;
     supermercado.paginaWeb = faker.internet.url();
 
     const updatedSupermercado: SupermercadoEntity = await service.update(supermercado.id, supermercado);
@@ -102,7 +102,7 @@ describe('SupermercadoService', () => {
   it('update should throw an exception for an invalid supermarket', async () => {
     let supermercado: SupermercadoEntity = supermercadosList[0];
     supermercado = {
-      ...supermercado, nombre: "Nuevo Supermercado " + faker.company.name(), latitud: faker.address.latitude(), longitud: faker.address.longitude(), paginaWeb: faker.internet.url()
+      ...supermercado, nombre: "Nuevo Supermercado " + faker.company.name(), latitud: faker.location.latitude(), longitud: faker.location.longitude(), paginaWeb: faker.internet.url()
     }
     await expect(() => service.update("0", supermercado)).rejects.toHaveProperty("message", "El supermercado con el id proporcionado no existe");
   });
@@ -111,7 +111,7 @@ describe('SupermercadoService', () => {
     const supermercado: SupermercadoEntity = supermercadosList[0];
     await service.delete(supermercado.id);
     const deletedSupermercado: SupermercadoEntity = await repository.findOne({where: {id: supermercado.id}});
-    expect(deletedSupermercado).toBeUndefined();
+    expect(deletedSupermercado).toBeNull();
   });
 
   it('delete should throw an exception for an invalid supermarket', async () => {

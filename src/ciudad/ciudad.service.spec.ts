@@ -27,7 +27,7 @@ describe('CiudadService', () => {
     ciudadesList = [];
     for (let i = 0; i < 5; i++) {
       const ciudad: CiudadEntity = await repository.save({
-        nombre: faker.address.city(),
+        nombre: faker.location.city(),
         pais: ["Argentina", "Ecuador", "Paraguay"][faker.number.int({ min: 0, max: 2 })],
         num_habitantes: faker.number.int({ min: 1000, max: 1000000 }),
       });
@@ -61,7 +61,7 @@ describe('CiudadService', () => {
   it('create should return a new city', async () => {
     const ciudad: CiudadEntity = {
       id: "",
-      nombre: faker.address.city(),
+      nombre: faker.location.city(),
       pais: ["Argentina", "Ecuador", "Paraguay"][faker.number.int({ min: 0, max: 2 })],
       num_habitantes: faker.number.int({ min: 1000, max: 1000000 }),
       supermercados: []

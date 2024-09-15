@@ -43,7 +43,7 @@ export class SupermercadoCiudadService {
             throw new BusinessLogicException("La ciudad con el id proporcionado no existe", BusinessError.NOT_FOUND);
         const ciudad: CiudadEntity = supermercado.ciudades.find(ciudad => ciudad.id === ciudadId);
         if (!ciudad)
-            throw new BusinessLogicException("La ciudad no pertenece al supermercado proporcionado", BusinessError.NOT_FOUND);
+            throw new BusinessLogicException("La ciudad con el id proporcionado no está asociada al supermercado", BusinessError.NOT_FOUND);
         return ciudad;
     }
 
@@ -71,7 +71,7 @@ export class SupermercadoCiudadService {
             throw new BusinessLogicException("La ciudad con el id proporcionado no existe", BusinessError.NOT_FOUND);
         const ciudadIndex: number = supermercado.ciudades.findIndex(ciudad => ciudad.id === ciudadId);
         if (ciudadIndex === -1)
-            throw new BusinessLogicException("La ciudad no pertenece al supermercado proporcionado", BusinessError.NOT_FOUND);
+            throw new BusinessLogicException("La ciudad con el id proporcionado no está asociada al supermercado", BusinessError.NOT_FOUND);
 
         supermercado.ciudades.splice(ciudadIndex, 1);
         return await this.supermercadoRepository.save(supermercado);

@@ -71,7 +71,7 @@ export class CiudadSupermercadoService {
             throw new BusinessLogicException("El supermercado con el id proporcionado no existe", BusinessError.NOT_FOUND);
         const supermercadoIndex: number = ciudad.supermercados.findIndex(supermercado => supermercado.id === supermercadoId);
         if (supermercadoIndex === -1)
-            throw new BusinessLogicException("El supermercado no pertenece a la ciudad proporcionada", BusinessError.NOT_FOUND);
+            throw new BusinessLogicException("El supermercado no está asociado a la ciudad", BusinessError.NOT_FOUND);
 
         ciudad.supermercados.splice(supermercadoIndex, 1);
         return await this.ciudadRepository.save(ciudad);

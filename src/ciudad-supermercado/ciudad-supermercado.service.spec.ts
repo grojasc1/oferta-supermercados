@@ -34,15 +34,15 @@ describe('CiudadSupermercadoService', () => {
     for (let i = 0; i < 5; i++) {
       const supermercado = await supermercadoRepository.save({
         nombre: "Supermercado " + faker.company.name(),
-        latitud: faker.address.latitude(),
-        longitud: faker.address.longitude(),
+        latitud: i,
+        longitud: i,
         paginaWeb: faker.internet.url(),
       });
       supermercadosList.push(supermercado);
     }
 
     ciudad = await ciudadRepository.save({
-      nombre: faker.address.city(),
+      nombre: faker.location.city(),
       pais: ["Argentina", "Ecuador", "Paraguay"][faker.number.int({ min: 0, max: 2 })],
       num_habitantes: faker.number.int({ min: 1000, max: 1000000 }),
       supermercados: supermercadosList,
@@ -56,8 +56,8 @@ describe('CiudadSupermercadoService', () => {
   it('addSupermarketToCity should return a city with a new supermarket', async () => {
     const supermercado: SupermercadoEntity = await supermercadoRepository.save({
       nombre: "Supermercado " + faker.company.name(),
-      latitud: faker.address.latitude(),
-      longitud: faker.address.longitude(),
+      latitud: faker.location.latitude(),
+      longitud: faker.location.longitude(),
       paginaWeb: faker.internet.url(),
     });
 
@@ -68,8 +68,8 @@ describe('CiudadSupermercadoService', () => {
   it('addSupermarketToCity should throw an exception for an invalid city', async () => {
     const supermercado: SupermercadoEntity = await supermercadoRepository.save({
       nombre: "Supermercado " + faker.company.name(),
-      latitud: faker.address.latitude(),
-      longitud: faker.address.longitude(),
+      latitud: faker.location.latitude(),
+      longitud: faker.location.longitude(),
       paginaWeb: faker.internet.url(),
     });
 
@@ -111,19 +111,19 @@ describe('CiudadSupermercadoService', () => {
   it('findSupermarketFromCity should throw an exception for a non associated supermarket', async () => {
     const supermercado = await supermercadoRepository.save({
       nombre: "Supermercado " + faker.company.name(),
-      latitud: faker.address.latitude(),
-      longitud: faker.address.longitude(),
+      latitud: faker.location.latitude(),
+      longitud: faker.location.longitude(),
       paginaWeb: faker.internet.url(),
     });
 
-    await expect(() => service.findSupermarketFromCity(ciudad.id, supermercado.id)).rejects.toHaveProperty("message", "El supermercado no está asociado a la ciudad");
+    await expect(() => service.findSupermarketFromCity(ciudad.id, supermercado.id)).rejects.toHaveProperty("message", "El supermercado no pertenece a la ciudad proporcionada");
   });
 
   it('updateSupermarketFromCity should return a city with the supermarkets updated', async () => { 
     const supermercado = await supermercadoRepository.save({
       nombre: "Supermercado " + faker.company.name(),
-      latitud: faker.address.latitude(),
-      longitud: faker.address.longitude(),
+      latitud: faker.location.latitude(),
+      longitud: faker.location.longitude(),
       paginaWeb: faker.internet.url(),
     });
 
@@ -138,8 +138,8 @@ describe('CiudadSupermercadoService', () => {
   it('updateSupermarketFromCity should throw an exception for an invalid city', async () => {
     const supermercado = await supermercadoRepository.save({
       nombre: "Supermercado " + faker.company.name(),
-      latitud: faker.address.latitude(),
-      longitud: faker.address.longitude(),
+      latitud: faker.location.latitude(),
+      longitud: faker.location.longitude(),
       paginaWeb: faker.internet.url(),
     });
 
@@ -149,8 +149,8 @@ describe('CiudadSupermercadoService', () => {
   it('updateSupermarketFromCity should throw an exception for an invalid supermarket', async () => {
     const supermercado = await supermercadoRepository.save({
       nombre: "Supermercado " + faker.company.name(),
-      latitud: faker.address.latitude(),
-      longitud: faker.address.longitude(),
+      latitud: faker.location.latitude(),
+      longitud: faker.location.longitude(),
       paginaWeb: faker.internet.url(),
     });
     
@@ -178,8 +178,8 @@ describe('CiudadSupermercadoService', () => {
   it('deleteSupermarketFromCity should throw an exception for a non associated supermarket', async () => {
     const supermercado = await supermercadoRepository.save({
       nombre: "Supermercado " + faker.company.name(),
-      latitud: faker.address.latitude(),
-      longitud: faker.address.longitude(),
+      latitud: faker.location.latitude(),
+      longitud: faker.location.longitude(),
       paginaWeb: faker.internet.url(),
     });
 

@@ -34,7 +34,7 @@ describe('SupermercadoCiudadService', () => {
     ciudadesList = [];
     for (let i = 0; i < 5; i++) {
       const ciudad = await ciudadRepository.save({
-        nombre: "Ciudad " + faker.address.city(),
+        nombre: "Ciudad " + faker.location.city(),
         pais: ["Argentina", "Ecuador", "Paraguay"][faker.number.int({ min: 0, max: 2 })],
         num_habitantes: faker.number.int({ min: 1000, max: 1000000 }),
       });
@@ -43,8 +43,8 @@ describe('SupermercadoCiudadService', () => {
 
     supermercado = await supermercadoRepository.save({
       nombre: "Supermercado " + faker.company.name(),
-      latitud: faker.address.latitude(),
-      longitud: faker.address.longitude(),
+      latitud: faker.location.latitude(),
+      longitud: faker.location.longitude(),
       paginaWeb: faker.internet.url(),
       ciudades: ciudadesList,
     });
@@ -56,7 +56,7 @@ describe('SupermercadoCiudadService', () => {
 
   it('addCityToSupermarket should return a supermarket with a new city', async () => {
     const ciudad: CiudadEntity = await ciudadRepository.save({
-      nombre: "Ciudad " + faker.address.city(),
+      nombre: "Ciudad " + faker.location.city(),
       pais: ["Argentina", "Ecuador", "Paraguay"][faker.number.int({ min: 0, max: 2 })],
       num_habitantes: faker.number.int({ min: 1000, max: 1000000 }),
     });
@@ -67,7 +67,7 @@ describe('SupermercadoCiudadService', () => {
 
   it('addCityToSupermarket should throw an exception for an invalid supermarket', async () => {
     const ciudad: CiudadEntity = await ciudadRepository.save({
-      nombre: "Ciudad " + faker.address.city(),
+      nombre: "Ciudad " + faker.location.city(),
       pais: ["Argentina", "Ecuador", "Paraguay"][faker.number.int({ min: 0, max: 2 })],
       num_habitantes: faker.number.int({ min: 1000, max: 1000000 }),
     });
@@ -108,7 +108,7 @@ describe('SupermercadoCiudadService', () => {
 
   it('findCityFromSupermarket should throw an exception for a non associated city', async () => {
     const ciudad = await ciudadRepository.save({
-      nombre: "Ciudad " + faker.address.city(),
+      nombre: "Ciudad " + faker.location.city(),
       pais: ["Argentina", "Ecuador", "Paraguay"][faker.number.int({ min: 0, max: 2 })],
       num_habitantes: faker.number.int({ min: 1000, max: 1000000 }),
     });
@@ -118,7 +118,7 @@ describe('SupermercadoCiudadService', () => {
 
   it('updateCityFromSupermarket should return a supermarket with an updated city', async () => {
     const ciudad = await ciudadRepository.save({
-      nombre: "Ciudad " + faker.address.city(),
+      nombre: "Ciudad " + faker.location.city(),
       pais: ["Argentina", "Ecuador", "Paraguay"][faker.number.int({ min: 0, max: 2 })],
       num_habitantes: faker.number.int({ min: 1000, max: 1000000 }),
     });
@@ -132,7 +132,7 @@ describe('SupermercadoCiudadService', () => {
 
   it('updateCityFromSupermarket should throw an exception for an invalid supermarket', async () => {
     const ciudad = await ciudadRepository.save({
-      nombre: "Ciudad " + faker.address.city(),
+      nombre: "Ciudad " + faker.location.city(),
       pais: ["Argentina", "Ecuador", "Paraguay"][faker.number.int({ min: 0, max: 2 })],
       num_habitantes: faker.number.int({ min: 1000, max: 1000000 }),
     });
@@ -142,7 +142,7 @@ describe('SupermercadoCiudadService', () => {
 
   it('updateCityFromSupermarket should throw an exception for an invalid city', async () => {
     const ciudad = await ciudadRepository.save({
-      nombre: "Ciudad " + faker.address.city(),
+      nombre: "Ciudad " + faker.location.city(),
       pais: ["Argentina", "Ecuador", "Paraguay"][faker.number.int({ min: 0, max: 2 })],
       num_habitantes: faker.number.int({ min: 1000, max: 1000000 }),
     });
@@ -170,7 +170,7 @@ describe('SupermercadoCiudadService', () => {
 
   it('deleteCityFromSupermarket should throw an exception for a non associated city', async () => {
     const ciudad = await ciudadRepository.save({
-      nombre: "Ciudad " + faker.address.city(),
+      nombre: "Ciudad " + faker.location.city(),
       pais: ["Argentina", "Ecuador", "Paraguay"][faker.number.int({ min: 0, max: 2 })],
       num_habitantes: faker.number.int({ min: 1000, max: 1000000 }),
     });
