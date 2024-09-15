@@ -3,7 +3,7 @@ import { CiudadSupermercadoService } from './ciudad-supermercado.service';
 import { Repository } from 'typeorm';
 import { CiudadEntity } from '../ciudad/ciudad.entity/ciudad.entity';
 import { SupermercadoEntity } from '../supermercado/supermercado.entity/supermercado.entity';
-import { TypeOrmTestingConfig } from 'src/shared/testing-utils/typeorm-testing-config';
+import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-config';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { faker } from '@faker-js/faker';
 
@@ -43,7 +43,7 @@ describe('CiudadSupermercadoService', () => {
 
     ciudad = await ciudadRepository.save({
       nombre: faker.address.city(),
-      pais: faker.address.country(),
+      pais: ["Argentina", "Ecuador", "Paraguay"][faker.number.int({ min: 0, max: 2 })],
       num_habitantes: faker.number.int({ min: 1000, max: 1000000 }),
       supermercados: supermercadosList,
     });
